@@ -1,0 +1,30 @@
+name: "Initiate"
+on:
+  workflow_dispatch: 
+  workflow_call:
+jobs:
+  download-jdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Download"
+        run: |
+            curl -O https://download.java.net/java/early_access/jdk27/22/GPL/openjdk-27-ea+22_linux-x64_bin.tar.gz
+      - name: "Un Package"
+        run: |
+            tar -xzf openjdk-27-ea+22_linux-x64_bin.tar.gz
+  download-gradle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Download SDKMAN!"
+        run: |
+            curl -s "https://get.sdkman.io" | bash
+      - name: "Download Gradle"
+        run: |
+            sdk install gradle 9.5.1
+            sdk default gradle 9.5.1
+  verify-download:
+    runs-on: ubuntu-latest
+      - name: "Verify"
+        run: |
+            java -version
+            gradle -v
